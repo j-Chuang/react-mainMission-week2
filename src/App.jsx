@@ -23,16 +23,27 @@ function App() {
     })
   }
 
+  // 取得產品，拉出改async函式
+  const getProducts = async () => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/v2/api/${API_PATH}/admin/products`
+      );
+      setProducts(res.data.products);
+    } catch (error) {
+      alert("取得產品失敗");
+    }
+  };
+
   // 登入觸發，改成async函式
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
       const res = await axios.post(`${BASE_URL}/v2/admin/signin`,account)
-      const {token, expired} = res.data;
-      document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
-      axios.defaults.headers.common['Authorization'] = token;
-      const productsRes = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/admin/products`)
-      setProducts(productsRes.data.products)
+      const {token, expired} = res.data; // 取得token
+      document.cookie = `hexToken=${token}; expires=${new Date(expired)}`; // token寫入cookie
+      axios.defaults.headers.common['Authorization'] = token; // 請求開始都會加入token
+      getProducts();
       setIsAuth(true);
     } catch (error) {
       console.log(error);
