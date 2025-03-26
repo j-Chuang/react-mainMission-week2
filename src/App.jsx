@@ -6,6 +6,20 @@ const API_PATH = import.meta.env.VITE_API_PATH
 
 
 function App() {
+
+// const testObj = {
+//   a:1,
+//   a:1,
+// }
+
+// const handleInputChange2 = (e) => {
+//   const {name, value} = e.target;
+//   setUser({
+//     ...user,
+//     [name]: value
+//   })
+// }
+
   const [account, setAccount] = useState({
     "username": "example@test.com",    
     "password": "example"
